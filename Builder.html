@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>建造者模式</title>
+    <script>
+        var Human = function (param) {
+            this.skill = param && param.skill || '保密';
+            this.hobby = param && param.skill || '保密';
+        }
+        Human.prototype = {
+            getSkill: function () {
+                return this.skill;
+            },
+            getHobby: function () {
+                return this.hobby;
+            },
+            setSkill: function (skill) {
+                this.skill = skill;
+            }
+
+        }
+        var Named = function (name) {
+            var that = this;
+            (function (name, that) {
+                that.wholeName = name;
+                if (name.indexOf(' ') > -1) {
+                    that.FirstName = name.slice(0, name.indexOf(' '));
+                    that.SecondName = name.slice(name.indexOf(' '));
+                }
+                else {
+                    that.FirstName = name;
+                    that.SecondName = '';
+                }
+            })(name, that);
+        }
+        var Work = function (work) {
+            var that = this;
+            (function (work, that) {
+                switch (work) {
+                    case 'code':
+                        that.work = '工程师';
+                        that.workDescript = '每天沉醉于编程';
+                        break;
+                    case 'UI':
+                    case 'UE':
+                        that.work = '设计师';
+                        that.workDescript = '设计更似一种艺术';
+                        break;
+                    case 'teach':
+                        that.work = '教师';
+                        that.workDescript = '分享也是一种快乐';
+                        break;
+                    default:
+                        that.work = work;
+                        that.workDescript = '对不起，我们还不清楚您所选择职位的相关描述';
+                }
+            })(work, that);
+        }
+        Work.prototype.changeWork = function (work) {
+            this.work = work;
+        }
+        Work.prototype.changeDescript = function (setence) {
+            this.workDescript = setence;
+        }
+
+
+        var Person = function (name, work) {
+            var _person = new Human();
+            _person.name = new Named(name);
+            _person.work = new Work(work);
+            return _person;
+        }
+
+        var person = new Person("老三", "UI");
+        console.log(person.skill);
+        console.log(person.name.FirstName);
+        console.log(person.work.work);
+        console.log(person.work.workDescript);
+        person.work.changeDescript('更改一下描述！');
+        console.log(person.work.workDescript);
+        person.setSkill('打篮球');
+        console.log(person.getSkill());
+
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -20,7 +20,7 @@ var getTarget = function (event) {
     var event = getEvent(event);
     return event.target || event.srcElement;
 }
-//阻止默认行为
+//阻止默认行为。用法：preventDefault(e);
 var preventDefault = function (event) {
     var event = getEvent(event);
     if (event.preventDefault) {

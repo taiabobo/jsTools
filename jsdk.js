@@ -10,3 +10,22 @@ function addEvent(dom, type, fn) {
         dom['on' + type] = fn;
     }
 }
+
+//外观模式获取事件对象兼容
+var getEvent = function (event) {
+    return event || window.event;
+}
+//获取目标元素
+var getTarget = function (event) {
+    var event = getEvent(event);
+    return event.target || event.srcElement;
+}
+//阻止默认行为
+var preventDefault = function (event) {
+    var event = getEvent(event);
+    if (event.preventDefault) {
+        event.preventDefault();
+    } else {
+        event.returnValue = false;
+    }
+}
